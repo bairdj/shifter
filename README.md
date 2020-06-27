@@ -1,4 +1,14 @@
-# shifter
+# Shifter
+
+Shifter is a simple SPA shift tracker that allows a user to input the start and end time of a shift, and the hourly pay rate.
+Shifter will then display and update the accrued income in real time 💸
+
+
+# Stack
+
+* Vue
+* Vuetify
+* Luxon
 
 ## Project setup
 ```

@@ -1,28 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-content>
+      <v-container fluid class="fill-height">
+        <v-row align="center" justify="center">
+          <v-col lg="6" sm="12">
+            <ShiftForm v-on:setup="update" v-if="!setup"/>
+            <Output v-else :interval="interval" :rate="rate"/>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ShiftForm from "./components/ShiftForm";
+import Output from "./components/Output";
+import { Interval } from 'luxon';
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {Output, ShiftForm},
+  data() {
+    return {
+      setup: false,
+      startTime: null,
+      endTime: null,
+      rate: 0
+    }
+  },
+  methods: {
+    update(startTime, endTime, rate) {
+      this.startTime = startTime;
+      this.endTime = endTime;
+      this.rate = rate;
+      this.setup = true;
+    }
+  },
+  computed: {
+    interval() {
+      return Interval.fromDateTimes(this.startTime, this.endTime);
+    }
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
